@@ -4,7 +4,8 @@
   "description": "[![Actions Status](https://github.com/Labauri/frontend-project-46/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Labauri/frontend-project-46/actions)",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node gendiff.js"
   },
   "repository": {
     "type": "git",
@@ -17,10 +18,10 @@
   },
   "homepage": "https://github.com/Labauri/frontend-project-46#readme",
   "dependencies": {
-    "commander": "^12.1.0",
-    "make": "^0.8.1"
+    "commander": "^12.1.0"
   },
   "bin": {
     "gendiff": "./gendiff.js"
   }
 }
+
