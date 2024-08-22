@@ -1,11 +1,9 @@
-const path = require('path');
-const fs = require('fs');
+import path from 'path';
+import fs from 'fs';
 
-const readFile = (filepath) => {
+export const readFile = (filepath) => {
   const absolutePath = path.resolve(process.cwd(), filepath);
   return fs.readFileSync(absolutePath, 'utf-8');
 };
 
-const parseFile = (fileContent) => JSON.parse(fileContent);
-
-module.exports = { readFile, parseFile };
+export const parseFile = (fileContent) => JSON.parse(fileContent);
