@@ -1,5 +1,6 @@
 import path from 'path';
 import fs from 'fs';
+import process from 'process';
 
 export const readFile = (filepath) => {
   const absolutePath = path.resolve(process.cwd(), filepath);

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
+import process from 'process';
 import { readFile, parseFile } from '../src/parser.js';
 import compareFiles from '../src/compare.js';
 
