@@ -7,10 +7,10 @@ lint:
 	npx eslint . --fix
 
 test:
-	gradlew.bat test
+	cmd.exe /c gradlew.bat test
 
 coverage:
-	gradlew.bat jacocoTestReport
+	cmd.exe /c gradlew.bat jacocoTestReport
 
 install:
 	npm install
