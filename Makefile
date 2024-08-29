@@ -7,7 +7,7 @@ lint:
 	npx eslint . --fix
 
 test:
-    ./gradlew test
+	./gradlew test
 
 coverage:
-    ./gradlew jacocoTestReport
+	./gradlew jacocoTestReport
