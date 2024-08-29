@@ -14,3 +14,4 @@ coverage:
 
 install:
 	npm install
+
