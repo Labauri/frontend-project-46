@@ -11,3 +11,6 @@ test:
 
 coverage:
 	./gradlew jacocoTestReport
+
+install:
+	npm install
