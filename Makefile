@@ -7,10 +7,10 @@ lint:
 	npx eslint . --fix
 
 test:
-	./gradlew test
+	npm test
 
-coverage:
-	./gradlew jacocoTestReport
+test-coverage:
+	npm test -- --coverage --coverageProvider=v8
 
 install:
 	npm install
