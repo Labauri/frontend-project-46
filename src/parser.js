@@ -1,10 +1,12 @@
 import path from 'path';
 import fs from 'fs';
-import process from 'process';
+import { fileURLToPath } from 'url';
 
-export const readFile = (filepath) => {
-  const absolutePath = path.resolve(process.cwd(), filepath);
-  return fs.readFileSync(absolutePath, 'utf-8');
-};
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export const getFixturePath = (filename) => path.join('__fixtures__', filename);
+
+export const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
 
 export const parseFile = (fileContent) => JSON.parse(fileContent);
