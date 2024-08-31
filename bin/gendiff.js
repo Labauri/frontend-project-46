@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
+import path from 'path';
 import process from 'process';
 import { readFile, parseFile } from '../src/parser.js';
 import compareFiles from '../src/compare.js';
@@ -13,8 +14,11 @@ program
   .version('1.0.0')
   .arguments('<filepath1> <filepath2>')
   .action((filepath1, filepath2) => {
-    const fileContent1 = readFile(filepath1);
-    const fileContent2 = readFile(filepath2);
+    const absolutePath1 = path.resolve(filepath1);
+    const absolutePath2 = path.resolve(filepath2);
+
+    const fileContent1 = readFile(absolutePath1);
+    const fileContent2 = readFile(absolutePath2);
 
     const data1 = parseFile(fileContent1);
     const data2 = parseFile(fileContent2);
