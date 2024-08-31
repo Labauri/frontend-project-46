@@ -1,4 +1,4 @@
-.PHONY: help
+.PHONY: test
 
 gendiff-help:
 	gendiff -h
