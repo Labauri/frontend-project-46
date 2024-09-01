@@ -10,8 +10,14 @@ describe('compareFiles', () => {
     const data2 = parseFile(file2);
 
     const result = compareFiles(data1, data2);
-    const expected = readFile('gendiff.js');
 
-    expect(result).toBe(expected);
+    expect(result).toMatchInlineSnapshot(`
+      "- follow: false
+        host: hexlet.io
+      - proxy: 123.234.53.22
+      - timeout: 50
+      + timeout: 20
+      + verbose: true"
+    `);
   });
 });
