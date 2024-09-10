@@ -18,4 +18,5 @@ make test
 ```
 
 Demonstration of how json file comparison works: [Asciinema](https://asciinema.org/a/rlEaW62fH1pnmfY7tDP9uPuCJ).
+
 Demonstration of how yml file comparison works: [Asciinema](https://asciinema.org/a/SipyUgnhbhqhPGMyKdUqvrNUQ).
