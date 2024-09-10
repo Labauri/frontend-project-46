@@ -1,23 +1,22 @@
-import { readFile, parseFile } from '../src/parser.js';
-import compareFiles from '../src/compare.js';
+import gendiff from '../src/index.js';
+import { fileURLToPath } from 'url';
+import path from 'path';
 
-describe('compareFiles', () => {
-  it('compares two JSON files correctly', () => {
-    const file1 = readFile('file1.json');
-    const file2 = readFile('file2.json');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-    const data1 = parseFile(file1);
-    const data2 = parseFile(file2);
+test('compare flat YAML files', () => {
+  const filepath1 = path.join(__dirname, '../__fixtures__/filepath1.yml');
+  const filepath2 = path.join(__dirname, '../__fixtures__/filepath2.yml');
 
-    const result = compareFiles(data1, data2);
-
-    expect(result).toMatchInlineSnapshot(`
-      "- follow: false
-        host: hexlet.io
-      - proxy: 123.234.53.22
-      - timeout: 50
-      + timeout: 20
-      + verbose: true"
-    `);
-  });
+  const expected = `{
+  - follow: false
+    host: hexlet.io
+  - proxy: 123.234.53.22
+  - timeout: 50
+  + timeout: 20
+  + verbose: true
+}`;
+  const result = gendiff(filepath1, filepath2);
+  expect(result).toBe(expected);
 });
