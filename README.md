@@ -22,3 +22,5 @@ Demonstration of how json file comparison works: [Asciinema](https://asciinema.o
 Demonstration of how yml file comparison works: [Asciinema](https://asciinema.org/a/SipyUgnhbhqhPGMyKdUqvrNUQ).
 
 Demonstration of how recursive file comparison works.: [Asciinema](https://asciinema.org/a/Du9lsMene89f2WQB0OLscT61H).
+
+Showing askinema with flat format work: [Asciinema](https://asciinema.org/a/upPE5D9aXYl9mepcwDgwXqmQx).
