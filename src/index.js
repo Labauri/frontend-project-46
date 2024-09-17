@@ -1,7 +1,8 @@
 import _ from 'lodash';
 import parse from './parser.js';
 import stylish from './formatters/stylish.js';
-import plain from './formatters/plain.js'; // Импортируем plain формат
+import plain from './formatters/plain.js';
+import json from './formatters/json.js';
 
 const buildDiff = (data1, data2) => {
   const keys = _.union(_.keys(data1), _.keys(data2));
@@ -34,6 +35,9 @@ const gendiff = (filepath1, filepath2, format = 'stylish') => {
   }
   if (format === 'plain') {
     return plain(diff);
+  }
+  if (format === 'json') {
+    return json(diff);
   }
 
   throw new Error(`Unknown format: ${format}`);
