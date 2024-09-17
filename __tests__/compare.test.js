@@ -19,6 +19,7 @@ test('compare nested JSON files in plain format', () => {
 
   const result = gendiff(filepath1, filepath2, 'plain');
   expect(result).toMatchSnapshot();
+});
 
 test('compare nested JSON files in JSON format', () => {
   const filepath1 = path.join(__dirname, '../__fixtures__/file1.json');
@@ -26,5 +27,4 @@ test('compare nested JSON files in JSON format', () => {
 
   const result = gendiff(filepath1, filepath2, 'json');
   expect(result).toMatchSnapshot();
-});
 });
