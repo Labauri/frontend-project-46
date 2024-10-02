@@ -7,8 +7,7 @@ const __dirname = path.dirname(__filename);
 
 const getFixturePath = (filename) => path.join(__dirname, '../__fixtures__', filename);
 
-const expectedStylish = `
-{
+const expectedStylish = `{
     common: {
       + follow: false
         setting1: Value 1
@@ -58,7 +57,7 @@ test('compare nested JSON files in stylish format', () => {
   const filepath2 = getFixturePath('file2.json');
 
   const result = gendiff(filepath1, filepath2);
-  expect(result).toEqual(expectedStylish);
+  expect(result.trim()).toEqual(expectedStylish.trim());
 });
 
 const expectedPlain = `
@@ -79,29 +78,28 @@ test('compare nested JSON files in plain format', () => {
   const filepath2 = getFixturePath('file2.json');
 
   const result = gendiff(filepath1, filepath2, 'plain');
-  expect(result).toEqual(expectedPlain);
+  expect(result.trim()).toEqual(expectedPlain.trim());
 });
 
-const expectedJson = `
-{
-  "common": {
-    "follow": false,
-    "setting1": "Value 1",
-    "setting2": null,
-    "setting3": null,
-    "setting4": "blah blah",
-    "setting5": { "key5": "value5" },
-    "setting6": { "doge": { "wow": "so much" }, "key": "value", "ops": "vops" }
+const expectedJson = JSON.stringify({
+  common: {
+    follow: false,
+    setting1: 'Value 1',
+    setting2: null,
+    setting3: null,
+    setting4: 'blah blah',
+    setting5: { key5: 'value5' },
+    setting6: { doge: { wow: 'so much' }, key: 'value', ops: 'vops' },
   },
-  "group1": { "baz": "bars", "foo": "bar", "nest": "str" },
-  "group2": null,
-  "group3": { "deep": { "id": { "number": 45 } }, "fee": 100500 }
-}`;
+  group1: { baz: 'bars', foo: 'bar', nest: 'str' },
+  group2: null,
+  group3: { deep: { id: { number: 45 } }, fee: 100500 },
+}, null, 2);
 
 test('compare nested JSON files in JSON format', () => {
   const filepath1 = getFixturePath('file1.json');
   const filepath2 = getFixturePath('file2.json');
 
   const result = gendiff(filepath1, filepath2, 'json');
-  expect(result).toEqual(expectedJson);
+  expect(result.trim()).toEqual(expectedJson.trim());
 });

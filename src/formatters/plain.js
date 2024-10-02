@@ -1,36 +1,29 @@
-import _ from 'lodash';
-
-const formatValue = (value) => {
-  if (_.isObject(value) && value !== null) {
-    return '[complex value]';
-  }
-  if (typeof value === 'string') {
-    return `'${value}'`;
-  }
-  return String(value);
+const stringify = (value) => {
+  if (value === null) return 'null';
+  if (typeof value === 'object') return '[complex value]';
+  return `'${value}'`;
 };
 
-const plain = (diffTree) => {
-  const iter = (tree, parent) => tree
-    .filter(({ type }) => type !== 'unchanged')
-    .map((node) => {
-      const property = parent ? `${parent}.${node.key}` : node.key;
-      switch (node.type) {
-        case 'added':
-          return `Property '${property}' was added with value: ${formatValue(node.value)}`;
-        case 'removed':
-          return `Property '${property}' was removed`;
-        case 'updated':
-          return `Property '${property}' was updated. From ${formatValue(node.oldValue)} to ${formatValue(node.newValue)}`;
-        case 'nested':
-          return iter(node.children, property);
-        default:
-          throw new Error(`Unknown type: '${node.type}'`);
+const plain = (diff) => {
+  const iter = (node, path) => {
+    return node.flatMap((item) => {
+      const currentPath = [...path, item.key];
+      if (item.type === 'nested') {
+        return iter(item.children, currentPath);
       }
-    })
-    .join('\n');
-
-  return iter(diffTree, '');
+      if (item.type === 'added') {
+        return `Property '${currentPath.join('.')}' was added with value: ${stringify(item.value)}`;
+      }
+      if (item.type === 'removed') {
+        return `Property '${currentPath.join('.')}' was removed`;
+      }
+      if (item.type === 'updated') {
+        return `Property '${currentPath.join('.')}' was updated. From ${stringify(item.oldValue)} to ${stringify(item.value)}`;
+      }
+      return [];
+    }).join('\n');
+  };
+  return iter(diff, []).trim();
 };
 
 export default plain;
