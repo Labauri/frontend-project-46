@@ -1,0 +1,116 @@
+[
+  {
+    "key": "common",
+    "status": "difObject",
+    "children": [
+      {
+        "key": "follow",
+        "status": "add",
+        "beforeValue": false
+      },
+      {
+        "key": "setting1",
+        "status": "equal",
+        "beforeValue": "Value 1"
+      },
+      {
+        "key": "setting2",
+        "status": "remove",
+        "beforeValue": 200
+      },
+      {
+        "key": "setting3",
+        "status": "different",
+        "beforeValue": true,
+        "afterValue": null
+      },
+      {
+        "key": "setting4",
+        "status": "add",
+        "beforeValue": "blah blah"
+      },
+      {
+        "key": "setting5",
+        "status": "add",
+        "beforeValue": {
+          "key5": "value5"
+        }
+      },
+      {
+        "key": "setting6",
+        "status": "difObject",
+        "children": [
+          {
+            "key": "doge",
+            "status": "difObject",
+            "children": [
+              {
+                "key": "wow",
+                "status": "different",
+                "beforeValue": "",
+                "afterValue": "so much"
+              }
+            ]
+          },
+          {
+            "key": "key",
+            "status": "equal",
+            "beforeValue": "value"
+          },
+          {
+            "key": "ops",
+            "status": "add",
+            "beforeValue": "vops"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "key": "group1",
+    "status": "difObject",
+    "children": [
+      {
+        "key": "baz",
+        "status": "different",
+        "beforeValue": "bas",
+        "afterValue": "bars"
+      },
+      {
+        "key": "foo",
+        "status": "equal",
+        "beforeValue": "bar"
+      },
+      {
+        "key": "nest",
+        "status": "different",
+        "beforeValue": {
+          "key": "value"
+        },
+        "afterValue": "str"
+      }
+    ]
+  },
+  {
+    "key": "group2",
+    "status": "remove",
+    "beforeValue": {
+      "abc": 12345,
+      "deep": {
+        "id": 45
+      }
+    }
+  },
+  {
+    "key": "group3",
+    "status": "add",
+    "beforeValue": {
+      "deep": {
+        "id": {
+          "number": 45
+        }
+      },
+      "fee": 100500
+    }
+  }
+]

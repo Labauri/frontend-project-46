@@ -1,105 +1,48 @@
-import gendiff from '../src/index.js';
-import { fileURLToPath } from 'url';
 import path from 'path';
+import { fileURLToPath } from 'url';
+import * as fs from 'fs';
+import gendiff from '../src/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const getFixture = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+const readFixtureFile = (filename) => fs.readFileSync(getFixture(filename), 'utf-8');
 
-const getFixturePath = (filename) => path.join(__dirname, '../__fixtures__', filename);
-
-const expectedStylish = `{
-    common: {
-      + follow: false
-        setting1: Value 1
-      - setting2: 200
-      - setting3: true
-      + setting3: null
-      + setting4: blah blah
-      + setting5: {
-            key5: value5
-        }
-        setting6: {
-            doge: {
-              - wow:
-              + wow: so much
-            }
-            key: value
-          + ops: vops
-        }
-    }
-    group1: {
-      - baz: bas
-      + baz: bars
-        foo: bar
-      - nest: {
-            key: value
-        }
-      + nest: str
-    }
-  - group2: {
-        abc: 12345
-        deep: {
-            id: 45
-        }
-    }
-  + group3: {
-        deep: {
-            id: {
-                number: 45
-            }
-        }
-        fee: 100500
-    }
-}`;
-
-test('compare nested JSON files in stylish format', () => {
-  const filepath1 = getFixturePath('file1.json');
-  const filepath2 = getFixturePath('file2.json');
-
-  const result = gendiff(filepath1, filepath2);
-  expect(result.trim()).toEqual(expectedStylish.trim());
+test('test1 genDiff .json default=stylish formatter', () => {
+  const file1 = getFixture('file1.json');
+  const file2 = getFixture('file2.json');
+  const response = gendiff(file1, file2);
+  const fileContent = readFixtureFile('files_12_stylish_result.txt');
+  expect(response).toEqual(fileContent);
 });
 
-const expectedPlain = `
-Property 'common.follow' was added with value: false
-Property 'common.setting2' was removed
-Property 'common.setting3' was updated. From true to null
-Property 'common.setting4' was added with value: 'blah blah'
-Property 'common.setting5' was added with value: [complex value]
-Property 'common.setting6.doge.wow' was updated. From '' to 'so much'
-Property 'common.setting6.ops' was added with value: 'vops'
-Property 'group1.baz' was updated. From 'bas' to 'bars'
-Property 'group1.nest' was updated. From [complex value] to 'str'
-Property 'group2' was removed
-Property 'group3' was added with value: [complex value]`;
-
-test('compare nested JSON files in plain format', () => {
-  const filepath1 = getFixturePath('file1.json');
-  const filepath2 = getFixturePath('file2.json');
-
-  const result = gendiff(filepath1, filepath2, 'plain');
-  expect(result.trim()).toEqual(expectedPlain.trim());
+test('test2 genDiff .yml default=stylish formatter', () => {
+  const file1 = getFixture('file1.yml');
+  const file2 = getFixture('file2.yml');
+  const response = gendiff(file1, file2);
+  const fileContent = readFixtureFile('stylish_result.txt');
+  expect(response).toBe(fileContent);
 });
 
-const expectedJson = JSON.stringify({
-  common: {
-    follow: false,
-    setting1: 'Value 1',
-    setting2: null,
-    setting3: null,
-    setting4: 'blah blah',
-    setting5: { key5: 'value5' },
-    setting6: { doge: { wow: 'so much' }, key: 'value', ops: 'vops' },
-  },
-  group1: { baz: 'bars', foo: 'bar', nest: 'str' },
-  group2: null,
-  group3: { deep: { id: { number: 45 } }, fee: 100500 },
-}, null, 2);
+test('test3 genDiff .json PLAIN formatter', () => {
+  const file1 = getFixture('file1.yml');
+  const file2 = getFixture('file2.yml');
+  const response = gendiff(file1, file2, 'plain');
+  const fileContent = readFixtureFile('plain_result.txt');
+  expect(response).toBe(fileContent);
+});
 
-test('compare nested JSON files in JSON format', () => {
-  const filepath1 = getFixturePath('file1.json');
-  const filepath2 = getFixturePath('file2.json');
+test('test4 genDiff JSON formatter', () => {
+  const file1 = getFixture('file1.yml');
+  const file2 = getFixture('file2.yml');
+  const response = gendiff(file1, file2, 'json');
+  const expected = readFixtureFile('json_result.txt');
+  expect(response).toBe(expected);
+});
 
-  const result = gendiff(filepath1, filepath2, 'json');
-  expect(result.trim()).toEqual(expectedJson.trim());
+test('test5 format error', () => {
+  const file1 = getFixture('file1.yml');
+  const file2 = getFixture('file2.yml');
+  const response = gendiff(file1, file2, '123');
+  expect(response).toBe('error');
 });

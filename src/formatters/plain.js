@@ -1,29 +1,43 @@
 const stringify = (value) => {
-  if (value === null) return 'null';
-  if (typeof value === 'object') return '[complex value]';
-  return `'${value}'`;
+  if (typeof value === 'string') {
+    return `'${value}'`;
+  }
+  if (typeof value === 'object' && value !== null) {
+    return '[complex value]';
+  }
+  return value;
 };
 
-const plain = (diff) => {
-  const iter = (node, path) => {
-    return node.flatMap((item) => {
-      const currentPath = [...path, item.key];
-      if (item.type === 'nested') {
-        return iter(item.children, currentPath);
-      }
-      if (item.type === 'added') {
-        return `Property '${currentPath.join('.')}' was added with value: ${stringify(item.value)}`;
-      }
-      if (item.type === 'removed') {
-        return `Property '${currentPath.join('.')}' was removed`;
-      }
-      if (item.type === 'updated') {
-        return `Property '${currentPath.join('.')}' was updated. From ${stringify(item.oldValue)} to ${stringify(item.value)}`;
-      }
-      return [];
-    }).join('\n');
-  };
-  return iter(diff, []).trim();
+const getAnswer = (status, beforeValue, afterValue) => {
+  switch (status) {
+    case 'remove':
+      return 'was removed';
+    case 'add':
+      return `was added with value: ${stringify(beforeValue)}`;
+    case 'different':
+      return `was updated. From ${stringify(beforeValue)} to ${stringify(afterValue)}`;
+    default:
+      return 'error';
+  }
 };
+
+const resultResponse = (pathToKey, beforeValue, afterValue, status) => `Property '${pathToKey}' ${getAnswer(status, beforeValue, afterValue)}\n`;
+
+const goToArr = (arr, path = '') => arr
+  .filter((item) => item.status !== 'equal')
+  .map((obj) => {
+    const pathToKey = [path, obj.key];
+    const pathToKeyStr = pathToKey.join('.').trim().replace(/^\./, '');
+
+    if (obj.status === 'difObject') {
+      return goToArr(obj.children, pathToKeyStr);
+    }
+    const value1 = obj.beforeValue;
+    const value2 = obj.afterValue;
+    return resultResponse(pathToKeyStr, value1, value2, obj.status);
+  })
+  .join('');
+
+const plain = (resultAst) => goToArr(resultAst).replace(/\n$/, '');
 
 export default plain;
