@@ -36,8 +36,8 @@ test('test4 genDiff JSON formatter', () => {
   const file1 = getFixture('file1.yml');
   const file2 = getFixture('file2.yml');
   const response = gendiff(file1, file2, 'json');
-  const expected = readFixtureFile('json_result.txt');
-  expect(response).toBe(expected);
+  const fileContent = readFixtureFile('json_result.txt');
+  expect(response).toBe(fileContent);
 });
 
 test('test5 format error', () => {
