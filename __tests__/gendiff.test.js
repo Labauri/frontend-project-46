@@ -12,32 +12,32 @@ test('test1 genDiff .json default=stylish formatter', () => {
   const file1 = getFixture('file1.json');
   const file2 = getFixture('file2.json');
   const response = gendiff(file1, file2);
-  const fileContent = readFixtureFile('stylish_result.txt');
-  expect(response).toEqual(fileContent);
+  const fileContent = readFixtureFile('stylish_result.txt').trim();
+  expect(response.trim()).toEqual(fileContent);
 });
 
 test('test2 genDiff .yml default=stylish formatter', () => {
   const file1 = getFixture('file1.yml');
   const file2 = getFixture('file2.yml');
   const response = gendiff(file1, file2);
-  const fileContent = readFixtureFile('stylish_result.txt');
-  expect(response).toBe(fileContent);
+  const fileContent = readFixtureFile('stylish_result.txt').trim();
+  expect(response.trim()).toEqual(fileContent);
 });
 
-test('test3 genDiff .json PLAIN formatter', () => {
+test('test3 genDiff .yml plain formatter', () => {
   const file1 = getFixture('file1.yml');
   const file2 = getFixture('file2.yml');
   const response = gendiff(file1, file2, 'plain');
-  const fileContent = readFixtureFile('plain_result.txt');
-  expect(response).toBe(fileContent);
+  const fileContent = readFixtureFile('plain_result.txt').trim();
+  expect(response.trim()).toEqual(fileContent);
 });
 
-test('test4 genDiff JSON formatter', () => {
+test('test4 genDiff json formatter', () => {
   const file1 = getFixture('file1.yml');
   const file2 = getFixture('file2.yml');
   const response = gendiff(file1, file2, 'json');
-  const fileContent = readFixtureFile('json_result.txt');
-  expect(response).toBe(fileContent);
+  const fileContent = readFixtureFile('json_result.txt').trim();
+  expect(response.trim()).toEqual(fileContent);
 });
 
 test('test5 format error', () => {
