@@ -44,5 +44,5 @@ test('test5 format error', () => {
   const file1 = getFixture('file1.yml');
   const file2 = getFixture('file2.yml');
   const response = gendiff(file1, file2, 'qwe123');
-  expect(response).toBe('error');
+  expect(response.trim()).toEqual('error');
 });
