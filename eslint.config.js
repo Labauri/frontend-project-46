@@ -1,5 +1,5 @@
-import globals from "globals";
-import pluginJs from "@eslint/js";
+import globals from 'globals';
+import pluginJs from '@eslint/js';
 
 export default [
   {
@@ -12,6 +12,6 @@ export default [
   },
   pluginJs.configs.recommended,
   {
-    ignores: ["coverage/"],
+    ignores: ['coverage/'],
   },
 ];
